@@ -1,0 +1,87 @@
+import { Button } from "./Buttons";
+import emailjs from 'emailjs-com';
+import { useRef, useState } from "react";
+
+export function Mail() {
+  const form = useRef();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const sendEmail = (e) => {
+      e.preventDefault();
+      setIsLoading(true);
+
+      emailjs
+          .sendForm(
+              import.meta.env.VITE_EMAILJS_SERVICE_ID,
+              import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+              form.current,
+              import.meta.env.VITE_EMAILJS_USER_ID
+          )
+          .then(
+              (result) => {
+                  console.log("Email berhasil dikirim!", result.text);
+                  alert("Pesan berhasil dikirim!");
+                  setIsLoading(false);
+              },
+              (error) => {
+                  console.log("Gagal mengirim email.", error.text);
+                  alert("Gagal mengirim pesan. Silakan coba lagi.");
+                  setIsLoading(false);
+              }
+          );
+  };
+
+    return (
+        <form ref={form} onSubmit={sendEmail} className="flex flex-col rounded-lg border-2 border-grayC bg-gray-400 max-h-full w-full h-full">
+            <div className="flex flex-col py-6 px-2 flex-grow">
+                <label htmlFor="email" className="font-bold my-2">Email</label>
+                <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-lightC placeholder:text-grayC leading-tight focus:outline-none focus:shadow-outline bg-gray-200"
+                    id="email"
+                    name="from_name"
+                    type="email"
+                    placeholder="Example@gmail.com"
+                    required
+                />
+                <label htmlFor="content" className="font-bold my-2">Content</label>
+                <textarea
+                    className="shadow appearance-none border rounded w-full h-80 py-2 px-3  text-lightC placeholder:text-grayC leading-tight focus:outline-none focus:shadow-outline  bg-gray-200 resize-none mb-6 text-start"
+                    name="message"
+                    id="content"
+                    placeholder="Write Message Here..."
+                    required
+                />
+                 <input
+                    type="hidden"
+                    name="to_name"
+                    value="Danu Haerida Putra"
+                />
+                <div className="flex w-full justify-center items-center">
+                    <Button name={isLoading ? "Sending..." : "Send"} type="submit" disabled={isLoading} />
+                </div>
+            </div>
+        </form>
+    );
+}
+
+export function MailText() {
+    return (
+        <div className="rounded-lg h-full w-full flex flex-col">
+            <h1 className="text-4xl font-bold mb-4">Experience</h1>
+            <ul>
+                <li>
+                    <h1 className="font-bold">💻Programming Community Bumigora University (2023 - Present)</h1>
+                    <p>Sebagai Anggota Komite Divisi Kurikulum di Programming Community Bumigora University sejak September 2023, saya terlibat dalam sesi mentoring mingguan, pembuatan materi pembelajaran terstruktur, berbagi pengetahuan, serta berpartisipasi dalam perencanaan dan pelaksanaan acara organisasi.</p>
+                </li>
+                <li>
+                    <h1 className="font-bold">🌐 FREELANCE SOCIAL MEDIA(2025 - Present)</h1>
+                    <p>Sebagai Digital Illustration Artist, saya berinteraksi dengan klien untuk memahami visi dan kebutuhan mereka, memberikan saran kreatif, mengembangkan konsep visual, mengelola tenggat waktu proyek, serta menangani tugas administratif seperti penagihan, kontrak, dan komunikasi klien melalui email atau media sosial.</p>
+                </li>
+            </ul>
+            <h1 className="text-4xl font-bold mb-4">Contact Me</h1>
+            <p className="text-justify">
+                Mari terhubung dan jelajahi peluang untuk berkolaborasi, belajar, dan tumbuh bersama!🤝Baik mendiskusikan proyek, berbagi wawasan, atau menjelajahi teknologi baru, saya selalu terbuka untuk koneksi yang bermakna. Jangan ragu untuk mengirimi saya permintaan koneksi atau pesan.
+            </p>
+        </div>
+    );
+}
