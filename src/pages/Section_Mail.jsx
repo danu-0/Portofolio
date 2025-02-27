@@ -4,7 +4,7 @@ function MailToMe() {
   return (
     <div
       id="contact"
-      className="flex flex-col h-auto w-full md:flex-row md:h-full bg-gray-100"
+      className="flex flex-col-reverse h-auto w-full md:flex-row md:h-full bg-gray-100"
     >
       <div className="flex flex-col h-full w-full md:w-[50%] px-4 py-16 md:px-16">
         <Mail />
