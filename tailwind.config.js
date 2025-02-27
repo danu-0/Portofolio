@@ -7,6 +7,9 @@ export default {
   theme: {
     
       extend: {
+        fontFamily: {
+          // firaNormal: ["F]
+        },
         colors:{
           darkC: 'rgba(17, 17, 17, 0.8)',
           pinkC: 'rgba(247, 44, 91, 0.8)',

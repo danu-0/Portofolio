@@ -1,23 +1,18 @@
+import Navbb from './components/Nav'
+import SectionOne from './pages/Section_One'
+import ProjectCarousel from './pages/Section_Project'
+import MailToMe from './pages/Section_Mail'
+import FooterSection from './pages/Footer'
 
-import Navbb from './components/Nav';
-import SectionOne  from "./pages/Section_One";
-import ProjectCarousel from "./pages/Section_Two";
-import MailToMe from "./pages/Section_Mail";
-//
-// import ReactDOM from 'react-dom/client';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-function Home (){
-
-  
-
-    return(
-        <div>
-            <Navbb/>
-            <SectionOne/>
-            <ProjectCarousel/>
-            <MailToMe/>
-        </div>
-    )
+function Home() {
+  return (
+    <div>
+      <Navbb />
+      <SectionOne />
+      <ProjectCarousel />
+      <MailToMe />
+      <FooterSection />
+    </div>
+  )
 }
-export default Home;
+export default Home
