@@ -10,8 +10,11 @@ import {
   faFlutter,
 } from '@fortawesome/free-brands-svg-icons'
 import { faDatabase } from '@fortawesome/free-solid-svg-icons'
+import { getAge } from '../components/CalculateAge'
 
 function SectionOne() {
+  const age = getAge('2002-10-02')
+
   return (
     <div
       id="about"
@@ -51,14 +54,13 @@ function SectionOne() {
           <h1 className="font-bold text-3xl mb-4">BIODATA</h1>
           <div className="space-y-4">
             <p className="text-lg">
-              <span className="font-semibold">Nama:</span> Danu
+              <span className="font-semibold">Name:</span> Danu Haerida Putra
               <br />
-              <span className="font-semibold">Umur:</span> 23 tahun
+              <span className="font-semibold">Age:</span> {age} YO
               <br />
-              <span className="font-semibold">Negara:</span> Indonesia
+              <span className="font-semibold">Country:</span> Indonesia
               <br />
-              <span className="font-semibold">Job Desk:</span> Fullstack
-              Developer
+              <span className="font-semibold">Role:</span> Fullstack Developer
               <br />
             </p>
           </div>
