@@ -1,4 +1,6 @@
-import { Button, ButtonSkills } from '../components/Buttons'
+import { ButtonSkills } from '../components/Buttons'
+import { motion, AnimatePresence } from 'framer-motion'
+
 import {
   faJs,
   faHtml5,
@@ -25,7 +27,23 @@ function SectionOne() {
           <ul className="mb-5 font-thin">
             <li>✨ Interest, Learn, Develop and Apply</li>
           </ul>
-          <Button name="My CV" />
+          <AnimatePresence>
+            <motion.button
+              className="font-bold hidden sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.4 }}
+              onClick={() =>
+                window.open(
+                  'https://drive.google.com/file/d/1pnT-idiPL0ni5760BzS7g9QlKAPeztaL/view?usp=sharing',
+                  '_blank'
+                )
+              }
+            >
+              My CV
+            </motion.button>
+          </AnimatePresence>
         </div>
       </div>
       <div className=" text-justify  flex flex-col w-full md:w-3/6 h-full ">

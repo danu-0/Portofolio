@@ -1,5 +1,6 @@
 import { fetchData } from '../db/api'
 import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const ProjectCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(1)
@@ -65,12 +66,18 @@ const ProjectCarousel = () => {
                   <p className="text-gray-700 mb-4 line-clamp-6 font-light text-sm">
                     {project.description}
                   </p>
-                  <a
-                    href={project.link}
-                    className="text-lightC inline-block pink bg-neutral-900 px-4 py-2 rounded-lg hover:bg-pink"
-                  >
-                    GitHub
-                  </a>
+                  <AnimatePresence>
+                    <motion.button
+                      className="font-bold hidden sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{ delay: 0.4 }}
+                      onClick={() => window.open(`${project.link}`, '_blank')}
+                    >
+                      Git Hub
+                    </motion.button>
+                  </AnimatePresence>
                 </div>
               </div>
             </div>

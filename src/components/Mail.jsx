@@ -1,6 +1,6 @@
-import { Button } from './Buttons'
 import emailjs from 'emailjs-com'
 import { useRef, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export function Mail() {
   const form = useRef()
@@ -61,11 +61,18 @@ export function Mail() {
         />
         <input type="hidden" name="to_name" value="Danu Haerida Putra" />
         <div className="flex w-full justify-center items-center">
-          <Button
-            name={isLoading ? 'Sending...' : 'Send'}
-            type="submit"
-            disabled={isLoading}
-          />
+          <AnimatePresence>
+            <motion.button
+              className="font-bold hidden sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.4 }}
+              type="submit"
+            >
+              {isLoading ? 'Sending...' : 'Send'}
+            </motion.button>
+          </AnimatePresence>
         </div>
       </div>
     </form>
