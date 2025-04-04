@@ -42,6 +42,7 @@ const ProjectCarousel = () => {
           const offset = (index - activeIndex) * 100 // 100 adalah jarak antara card
           const scale = index === activeIndex ? 1 : 0.9 // Scaling untuk card yang aktif dan tidak aktif
           const opacity = index === activeIndex ? 1 : 0.7 // Opacity untuk card yang tidak aktif
+          const shadow = index === activeIndex ? '0px 0px 5px gray' : 'none'
 
           return (
             <div
@@ -53,11 +54,14 @@ const ProjectCarousel = () => {
                 left: '5%',
               }}
             >
-              <div className="border border-grayC rounded-lg overflow-hidden w-[320px] h-fit md:w-96 md:h-auto">
+              <div
+                className="border-2 border-grayC rounded-lg overflow-hidden w-[320px] h-fit md:w-96 md:h-auto p-2"
+                style={{ boxShadow: shadow }}
+              >
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-48 bg-cover bg-center"
                 />
                 <div className="p-4">
                   <h2 className="text-xl font-bold mb-2 truncate">
@@ -67,16 +71,30 @@ const ProjectCarousel = () => {
                     {project.description}
                   </p>
                   <AnimatePresence>
-                    <motion.button
-                      className="font-bold sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 20 }}
-                      transition={{ delay: 0.4 }}
-                      onClick={() => window.open(`${project.link}`, '_blank')}
-                    >
-                      Git Hub
-                    </motion.button>
+                    <div className="flex gap-2">
+                      <motion.button
+                        className="font-bold sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ delay: 0.4 }}
+                        onClick={() => window.open(`${project.link}`, '_blank')}
+                      >
+                        Git Hub
+                      </motion.button>
+                      <motion.button
+                        className="font-bold sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ delay: 0.4 }}
+                        onClick={() =>
+                          window.open(`${project.deploy}`, '_blank')
+                        }
+                      >
+                        Deploy
+                      </motion.button>
+                    </div>
                   </AnimatePresence>
                 </div>
               </div>

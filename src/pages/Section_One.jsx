@@ -22,7 +22,7 @@ function SectionOne() {
     >
       <div className=" flex flex-col justify-start w-full p-8 md:w-3/6 h-full ">
         <div
-          className="h-80 w-full rounded-xl bg-cover bg-center"
+          className="h-80 w-full rounded-xl bg-cover bg-center shadow-sm shadow-gray-400"
           style={{ backgroundImage: `url(${'self.jpg'})` }}
         ></div>
         <div className="flex flex-col items-start h-auto w-full py-4">

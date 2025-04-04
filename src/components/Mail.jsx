@@ -35,14 +35,14 @@ export function Mail() {
     <form
       ref={form}
       onSubmit={sendEmail}
-      className="flex flex-col rounded-lg border-2 border-grayC bg-gray-400 max-h-full w-full h-full"
+      className="flex flex-col rounded-lg border-2 border-gray-400 bg-gray-200 max-h-full w-full h-full"
     >
       <div className="flex flex-col py-6 px-2 flex-grow">
         <label htmlFor="email" className="font-bold my-2">
           Email
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-grayC  leading-tight focus:outline-none focus:shadow-outline bg-gray-200"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-grayC  leading-tight focus:outline-none focus:shadow-outline"
           id="email"
           name="from_name"
           type="email"
@@ -53,7 +53,7 @@ export function Mail() {
           Content
         </label>
         <textarea
-          className="shadow appearance-none border rounded w-full h-80 py-2 px-3  text-grayC  leading-tight focus:outline-none focus:shadow-outline  bg-gray-200 resize-none mb-6 text-start"
+          className="shadow appearance-none border rounded w-full h-80 py-2 px-3  text-grayC  leading-tight focus:outline-none focus:shadow-outline resize-none mb-6 text-start"
           name="message"
           id="content"
           placeholder="Write Message Here..."

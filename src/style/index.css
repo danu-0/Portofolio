@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 img.pixelated {
