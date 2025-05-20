@@ -32,57 +32,67 @@ export function Mail() {
   }
 
   return (
-    <form
-      ref={form}
-      onSubmit={sendEmail}
-      className="flex flex-col rounded-lg border-2 border-gray-400 bg-gray-200 max-h-full w-full h-full"
-    >
-      <div className="flex flex-col py-6 px-2 flex-grow">
-        <label htmlFor="email" className="font-bold my-2">
-          Email
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-grayC  leading-tight focus:outline-none focus:shadow-outline"
-          id="email"
-          name="from_name"
-          type="email"
-          placeholder="Example@gmail.com"
-          required
-        />
-        <label htmlFor="content" className="font-bold my-2">
-          Content
-        </label>
-        <textarea
-          className="shadow appearance-none border rounded w-full h-80 py-2 px-3  text-grayC  leading-tight focus:outline-none focus:shadow-outline resize-none mb-6 text-start"
-          name="message"
-          id="content"
-          placeholder="Write Message Here..."
-          required
-        />
-        <input type="hidden" name="to_name" value="Danu Haerida Putra" />
-        <div className="flex w-full justify-center items-center">
-          <AnimatePresence>
-            <motion.button
-              className="font-bold sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ delay: 0.4 }}
-              type="submit"
-            >
-              {isLoading ? 'Sending...' : 'Send'}
-            </motion.button>
-          </AnimatePresence>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-xl font-bold mb-4">Contact Me</h1>
+      <p className="text-justify">
+        Mari terhubung dan jelajahi peluang untuk berkolaborasi, belajar, dan
+        tumbuh bersama!🤝Baik mendiskusikan proyek, berbagi wawasan, atau
+        menjelajahi teknologi baru, saya selalu terbuka untuk koneksi yang
+        bermakna. Jangan ragu untuk mengirimi saya permintaan koneksi atau
+        pesan.
+      </p>
+      <form
+        ref={form}
+        onSubmit={sendEmail}
+        className="flex flex-col rounded-lg border-2 border-gray-400 bg-gray-200 max-h-full w-full h-full"
+      >
+        <div className="flex flex-col py-6 px-2 flex-grow">
+          <label htmlFor="email" className="font-bold my-2">
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-grayC  leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
+            name="from_name"
+            type="email"
+            placeholder="Example@gmail.com"
+            required
+          />
+          <label htmlFor="content" className="font-bold my-2">
+            Message
+          </label>
+          <textarea
+            className="shadow appearance-none border rounded w-full h-60 py-2 px-3  text-grayC  leading-tight focus:outline-none focus:shadow-outline resize-none mb-6 text-start"
+            name="message"
+            id="content"
+            placeholder="Write Message Here..."
+            required
+          />
+          <input type="hidden" name="to_name" value="Danu Haerida Putra" />
+          <div className="flex w-full justify-center items-center">
+            <AnimatePresence>
+              <motion.button
+                className="font-bold sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: 0.4 }}
+                type="submit"
+              >
+                {isLoading ? 'Sending...' : 'Send'}
+              </motion.button>
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 
 export function MailText() {
   return (
     <div className="rounded-lg h-full w-full flex flex-col">
-      <h1 className="text-4xl font-bold mb-4">Experience</h1>
+      <h1 className="text-xl font-bold mb-4">Experience</h1>
       <ul>
         <li>
           <h1 className="font-bold my-4">
@@ -109,14 +119,6 @@ export function MailText() {
           </p>
         </li>
       </ul>
-      <h1 className="text-4xl font-bold my-4">Contact Me</h1>
-      <p className="text-justify">
-        Mari terhubung dan jelajahi peluang untuk berkolaborasi, belajar, dan
-        tumbuh bersama!🤝Baik mendiskusikan proyek, berbagi wawasan, atau
-        menjelajahi teknologi baru, saya selalu terbuka untuk koneksi yang
-        bermakna. Jangan ragu untuk mengirimi saya permintaan koneksi atau
-        pesan.
-      </p>
     </div>
   )
 }

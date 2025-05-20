@@ -52,18 +52,24 @@ function SectionOne() {
       <div className=" text-justify  flex flex-col w-full md:w-3/6 h-full ">
         <div className="p-6">
           <h1 className="font-bold text-3xl mb-4">BIODATA</h1>
-          <div className="space-y-4">
-            <p className="text-lg">
-              <span className="font-semibold">Name:</span> Danu Haerida Putra
-              <br />
-              <span className="font-semibold">Age:</span> {age} YO
-              <br />
-              <span className="font-semibold">Country:</span> Indonesia
-              <br />
-              <span className="font-semibold">Role:</span> Fullstack Developer
-              <br />
-            </p>
-          </div>
+          <table className="p-2 font-semibold text-lg">
+            <tr className="">
+              <td>Name</td>
+              <td>: DANU HAERIDA PUTRA</td>
+            </tr>
+            <tr className="">
+              <td>Age</td>
+              <td>{`: ${age} YO`}</td>
+            </tr>
+            <tr className="">
+              <td>Country</td>
+              <td>: Indonesia</td>
+            </tr>
+            <tr className="">
+              <td>Role</td>
+              <td>: Fullstack Developer</td>
+            </tr>
+          </table>
         </div>
         <div className="p-6">
           <h1 className="font-bold text-3xl">ABOUT ME</h1>

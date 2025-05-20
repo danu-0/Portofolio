@@ -18,7 +18,7 @@ export default {
         purpleE: '#9772FB',
         redE: '#F55050',
         blueE: '#5463FF',
-        pink: '#353cfb',
+        pink: '#5409DA',
       },
       backgroundImage: {
         laravel: 'linear-gradient(to bottom right, #F55050 -20%, #2F3645 80%)',
