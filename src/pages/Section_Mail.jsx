@@ -1,8 +1,15 @@
+import { useContext } from 'react'
 import { Mail, MailText } from '../components/Mail'
+import { DarkMode } from '../context/darkMode'
 
 function MailToMe() {
+  const { isDarkMode } = useContext(DarkMode)
   return (
-    <div className="bg-gray-100 flex flex-col items-start">
+    <div
+      className={`flex flex-col items-start ${
+        isDarkMode ? 'bg-light text-dark ' : 'bg-dark text-light '
+      }`}
+    >
       <h1 className="flex w-full font-bold text-3xl px-8">Touch Me 📫</h1>
       <div
         id="contact"

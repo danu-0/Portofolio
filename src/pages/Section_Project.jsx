@@ -1,13 +1,17 @@
 import { fetchData } from '../db/api'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { ButtonsProject } from '../components/Buttons'
+import { DarkMode } from '../context/darkMode'
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ProjectCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(1)
   const [projectList, setProjectList] = useState([])
   const navigate = useNavigate()
+  const { isDarkMode } = useContext(DarkMode)
 
   const getData = async () => {
     const chaced = sessionStorage.getItem('projectList')
@@ -39,7 +43,9 @@ const ProjectCarousel = () => {
   return (
     <div
       id="project"
-      className="flex flex-col items-center h-screen py-4 bg-gray-100 "
+      className={`flex flex-col items-center h-screen py-4 ${
+        isDarkMode ? 'bg-light text-dark' : 'bg-dark text-light'
+      } `}
     >
       <h1 className="flex w-full font-bold text-3xl px-8 md:pb-8">
         Project List ✨
@@ -75,7 +81,11 @@ const ProjectCarousel = () => {
                   <h2 className="text-xl font-bold mb-2 truncate">
                     {project.title}
                   </h2>
-                  <p className="text-gray-700 mb-4 line-clamp-6 font-light text-sm">
+                  <p
+                    className={` mb-4 line-clamp-6 font-light text-sm ${
+                      isDarkMode ? 'text-gray-800' : 'text-gray-300'
+                    }`}
+                  >
                     {project.description}
                   </p>
                   <AnimatePresence>
@@ -83,17 +93,29 @@ const ProjectCarousel = () => {
                       <ButtonsProject
                         text="Git Hub"
                         onClick={() => window.open(`${project.link}`, '_blank')}
-                        className="px-2 md:px-6 py-2 bg-gray-900"
+                        className={`px-2 md:px-6 py-2 ${
+                          isDarkMode
+                            ? 'bg-dark text-light'
+                            : 'bg-light text-dark'
+                        }`}
                       />
                       <ButtonsProject
                         text="Deploy"
                         onClick={() =>
                           window.open(`${project.deploy}`, '_blank')
                         }
-                        className="px-2 md:px-6 py-2 bg-gray-900"
+                        className={`px-2 md:px-6 py-2 ${
+                          isDarkMode
+                            ? 'bg-dark text-light'
+                            : 'bg-light text-dark'
+                        }`}
                       />
                       <motion.button
-                        className="font-bold sm:flex items-center justify-center bg-gray-900 text-gray-100 rounded-xl px-2 md:px-4 py-2 hover:bg-pink duration-500"
+                        className={`font-bold sm:flex items-center justify-center rounded-xl px-2 md:px-4 py-2 hover:bg-pink duration-500 ${
+                          isDarkMode
+                            ? 'bg-dark text-light'
+                            : 'bg-light text-dark'
+                        }`}
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 20 }}
@@ -126,13 +148,13 @@ const ProjectCarousel = () => {
           onClick={handlePrev}
           className="flex items-center justify-center w-12 h-12"
         >
-          <div className="triangle-left"></div>
+          <FontAwesomeIcon icon={faCaretLeft} className="text-4xl" />
         </button>
         <button
           onClick={handleNext}
           className="flex items-center justify-center w-12 h-12"
         >
-          <div className="triangle-right"></div>
+          <FontAwesomeIcon icon={faCaretRight} className="text-4xl" />
         </button>
       </div>
     </div>

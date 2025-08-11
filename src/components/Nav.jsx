@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import '../style/index.css'
+import { DarkMode } from '../context/darkMode'
+import { ToggleDarkMode } from './Buttons'
 // import { useNavigate } from "react-router-dom"
 
 function Navbb() {
@@ -13,6 +15,7 @@ function Navbb() {
   ]
 
   const [isOpen, setIsOpen] = useState(false)
+  const { isDarkMode, setIsDarkMode } = useContext(DarkMode)
 
   const toggleNavBar = () => {
     setIsOpen(!isOpen)
@@ -31,9 +34,9 @@ function Navbb() {
   return (
     <div className={`relative`}>
       <div
-        className={`h-20 flex justify-between items-center px-6 py-3 bg-gray-100 text-black z-10 ${
-          isOpen ? 'fixed top-0 left-0 w-full bg-neutral-900 text-pink' : ''
-        }`}
+        className={`h-20 flex justify-between items-center px-6 py-3 z-10 ${
+          isOpen ? 'fixed top-0 left-0 w-full ' : ''
+        } ${isDarkMode ? 'bg-light text-dark' : 'bg-dark text-light'}`}
       >
         <h1 className="font-bold text-xl">DANU HAERIDA PUTRA</h1>
 
@@ -56,8 +59,14 @@ function Navbb() {
             </motion.a>
           ))}
         </div>
+        <ToggleDarkMode
+          isDark={isDarkMode}
+          onClick={() => setIsDarkMode(!isDarkMode)}
+        />
         <motion.button
-          className="font-bold hidden sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+          className={`font-bold hidden sm:flex items-center justify-center rounded-xl px-10 py-2 hover:bg-pink duration-500 ${
+            isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'
+          }`}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}

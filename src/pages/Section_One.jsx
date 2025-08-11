@@ -1,5 +1,5 @@
 import { ButtonSkills } from '../components/Buttons'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 import {
   faJs,
@@ -11,14 +11,19 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 import { faDatabase } from '@fortawesome/free-solid-svg-icons'
 import { getAge } from '../components/CalculateAge'
+import { useContext } from 'react'
+import { DarkMode } from '../context/darkMode'
 
 function SectionOne() {
+  const { isDarkMode } = useContext(DarkMode)
   const age = getAge('2002-10-02')
 
   return (
     <div
       id="about"
-      className="flex flex-col bg-gray-100 h-auto w-full md:flex-row md:h-screen"
+      className={`flex flex-col h-auto w-full md:flex-row md:h-screen
+        ${isDarkMode ? ' bg-light  text-dark' : 'bg-dark text-light'}
+      `}
     >
       <div className=" flex flex-col justify-start w-full p-8 md:w-3/6 h-full ">
         <div
@@ -30,45 +35,49 @@ function SectionOne() {
           <ul className="mb-5 font-thin">
             <li>✨ Interest, Learn, Develop and Apply</li>
           </ul>
-          <AnimatePresence>
-            <motion.button
-              className="font-bold sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ delay: 0.4 }}
-              onClick={() =>
-                window.open(
-                  'https://drive.google.com/file/d/1pnT-idiPL0ni5760BzS7g9QlKAPeztaL/view?usp=sharing',
-                  '_blank'
-                )
-              }
-            >
-              My CV
-            </motion.button>
-          </AnimatePresence>
+
+          <motion.button
+            className={`font-bold sm:flex items-center justify-center px-10 py-2 hover:bg-pink duration-500 rounded-xl ${
+              isDarkMode ? ' bg-dark text-light ' : 'bg-light text-dark'
+            }
+            `}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ delay: 0.4 }}
+            onClick={() =>
+              window.open(
+                'https://drive.google.com/file/d/1pnT-idiPL0ni5760BzS7g9QlKAPeztaL/view?usp=sharing',
+                '_blank'
+              )
+            }
+          >
+            My CV
+          </motion.button>
         </div>
       </div>
       <div className=" text-justify  flex flex-col w-full md:w-3/6 h-full ">
         <div className="p-6">
           <h1 className="font-bold text-3xl mb-4">BIODATA</h1>
-          <table className="p-2 font-semibold text-lg">
-            <tr className="">
-              <td>Name</td>
-              <td>: DANU HAERIDA PUTRA</td>
-            </tr>
-            <tr className="">
-              <td>Age</td>
-              <td>{`: ${age} YO`}</td>
-            </tr>
-            <tr className="">
-              <td>Country</td>
-              <td>: Indonesia</td>
-            </tr>
-            <tr className="">
-              <td>Role</td>
-              <td>: Fullstack Developer</td>
-            </tr>
+          <table className="table-auto p-2 font-semibold text-lg">
+            <tbody>
+              <tr>
+                <td className="pr-4">Name</td>
+                <td>: DANU HAERIDA PUTRA</td>
+              </tr>
+              <tr>
+                <td className="pr-4">Age</td>
+                <td>{`: ${age} YO`}</td>
+              </tr>
+              <tr>
+                <td className="pr-4">Country</td>
+                <td>: Indonesia</td>
+              </tr>
+              <tr>
+                <td className="pr-4">Role</td>
+                <td>: Fullstack Developer</td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div className="p-6">
@@ -88,16 +97,32 @@ function SectionOne() {
           <h1 className="font-bold text-3xl">Skills</h1>
           <div className="h-auto">
             <ul className="flex flex-wrap">
-              <ButtonSkills name="Javascript" icon={faJs} />
-              <ButtonSkills name="HTML 5" icon={faHtml5} />
-              <ButtonSkills name="CSS" icon={faCss3} />
-              <ButtonSkills name="Flutter" icon={faFlutter} />
+              <ButtonSkills isDark={isDarkMode} name="Javascript" icon={faJs} />
+              <ButtonSkills isDark={isDarkMode} name="HTML 5" icon={faHtml5} />
+              <ButtonSkills isDark={isDarkMode} name="CSS" icon={faCss3} />
+              <ButtonSkills
+                isDark={isDarkMode}
+                name="Flutter"
+                icon={faFlutter}
+              />
             </ul>
             <ul className="flex flex-wrap">
-              <ButtonSkills name="React JS" icon={faReact} />
-              <ButtonSkills name="Tailwind" iconSrc="Tailwind CSS.png" />
-              <ButtonSkills name="Figma" icon={faFigma} />
-              <ButtonSkills name="MySql" icon={faDatabase} />
+              <ButtonSkills
+                isDark={isDarkMode}
+                name="React JS"
+                icon={faReact}
+              />
+              <ButtonSkills
+                isDark={isDarkMode}
+                name="Tailwind"
+                iconSrc={isDarkMode ? 'Tailwind CSS-min.png' : 'tw.png'}
+              />
+              <ButtonSkills isDark={isDarkMode} name="Figma" icon={faFigma} />
+              <ButtonSkills
+                isDark={isDarkMode}
+                name="MySql"
+                icon={faDatabase}
+              />
             </ul>
           </div>
         </div>

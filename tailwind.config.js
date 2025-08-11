@@ -7,6 +7,8 @@ export default {
         // firaNormal: ["F]
       },
       colors: {
+        dark: '#100303',
+        light: '#F7F7F7',
         darkC: 'rgba(17, 17, 17, 0.8)',
         pinkC: 'rgba(247, 44, 91, 0.8)',
         grayC: '#444444',

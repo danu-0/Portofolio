@@ -1,10 +1,12 @@
 import emailjs from 'emailjs-com'
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { DarkMode } from '../context/darkMode'
 
 export function Mail() {
   const form = useRef()
   const [isLoading, setIsLoading] = useState(false)
+  const { isDarkMode } = useContext(DarkMode)
 
   const sendEmail = (e) => {
     e.preventDefault()
@@ -44,7 +46,9 @@ export function Mail() {
       <form
         ref={form}
         onSubmit={sendEmail}
-        className="flex flex-col rounded-lg border-2 border-gray-400 bg-gray-200 max-h-full w-full h-full"
+        className={`flex flex-col rounded-lg border-2 max-h-full w-full h-full ${
+          isDarkMode ? 'border-gray-400 bg-light' : 'border-grayC bg-dark'
+        }`}
       >
         <div className="flex flex-col py-6 px-2 flex-grow">
           <label htmlFor="email" className="font-bold my-2">
@@ -72,7 +76,9 @@ export function Mail() {
           <div className="flex w-full justify-center items-center">
             <AnimatePresence>
               <motion.button
-                className="font-bold sm:flex items-center justify-center bg-black text-gray-100 rounded-xl px-10 py-2 hover:bg-pink duration-500"
+                className={`font-bold sm:flex items-center justify-cente rounded-xl px-10 py-2 hover:bg-pink duration-500 ${
+                  isDarkMode ? 'bg-black text-gray-100' : 'bg-light text-dark'
+                }`}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
