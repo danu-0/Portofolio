@@ -47,7 +47,7 @@ function SectionOne() {
             transition={{ delay: 0.4 }}
             onClick={() =>
               window.open(
-                'https://drive.google.com/file/d/1pnT-idiPL0ni5760BzS7g9QlKAPeztaL/view?usp=sharing',
+                'https://drive.google.com/file/d/1-iaLx8roxEiuuw5ftYK2KJrItBMl_gj9/view?usp=sharing',
                 '_blank'
               )
             }

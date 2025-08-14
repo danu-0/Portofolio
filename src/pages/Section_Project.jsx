@@ -91,24 +91,18 @@ const ProjectCarousel = () => {
                   <AnimatePresence>
                     <div className="flex gap-2 flex-row justify-around">
                       <ButtonsProject
+                        isDark={isDarkMode}
                         text="Git Hub"
                         onClick={() => window.open(`${project.link}`, '_blank')}
-                        className={`px-2 md:px-6 py-2 ${
-                          isDarkMode
-                            ? 'bg-dark text-light'
-                            : 'bg-light text-dark'
-                        }`}
+                        className="px-2 md:px-6 py-2"
                       />
                       <ButtonsProject
+                        isDark={isDarkMode}
                         text="Deploy"
                         onClick={() =>
                           window.open(`${project.deploy}`, '_blank')
                         }
-                        className={`px-2 md:px-6 py-2 ${
-                          isDarkMode
-                            ? 'bg-dark text-light'
-                            : 'bg-light text-dark'
-                        }`}
+                        className="px-2 md:px-6 py-2"
                       />
                       <motion.button
                         className={`font-bold sm:flex items-center justify-center rounded-xl px-2 md:px-4 py-2 hover:bg-pink duration-500 ${

@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { fetchProjectById } from '../db/api'
 import { ButtonsProject } from './Buttons'
 import { TailSpin } from 'react-loader-spinner'
+import { DarkMode } from '../context/darkMode'
 
 const Detail = () => {
   const { id } = useParams()
@@ -10,6 +11,7 @@ const Detail = () => {
   const navigate = useNavigate()
   const [project, setProject] = useState(location.state || null)
   const [loading, setLoading] = useState(!location.state)
+  const { isDarkMode } = useContext(DarkMode)
 
   useEffect(() => {
     if (!project) {
@@ -36,8 +38,12 @@ const Detail = () => {
   }
 
   return (
-    <div className="flex flex-col-reverse md:flex-row w-full min-h-screen bg-white text-gray-800">
-      <div className="w-full md:w-1/2 flex flex-col justify-center p-6 md:p-12 bg-gradient-to-br from-gray-100 to-gray-200">
+    <div
+      className={`flex flex-col-reverse md:flex-row w-full min-h-screen ${
+        isDarkMode ? 'bg-light text-dark' : 'bg-dark text-light'
+      }`}
+    >
+      <div className="w-full md:w-1/2 flex flex-col justify-center p-6 md:p-12">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">{project.title}</h1>
         <p className="text-base md:text-lg leading-relaxed mb-6 text-justify">
           {project.description}
@@ -45,19 +51,22 @@ const Detail = () => {
 
         <div className="flex flex-wrap gap-4">
           <ButtonsProject
+            isDark={isDarkMode}
             text="GitHub"
             onClick={() => window.open(project.link, '_blank')}
-            className="px-4 md:px-12 py-4 bg-gray-900"
+            className="px-4 md:px-12 py-4"
           />
           <ButtonsProject
+            isDark={isDarkMode}
             text="Live Demo"
             onClick={() => window.open(project.deploy, '_blank')}
-            className="px-4 md:px-12 py-4 bg-gray-900"
+            className="px-4 md:px-12 py-4"
           />
           <ButtonsProject
+            isDark={isDarkMode}
             text="Back"
             onClick={handleBack}
-            className="px-4 md:px-12 py-4 bg-gray-900"
+            className="px-4 md:px-12 py-4"
           />
         </div>
       </div>
