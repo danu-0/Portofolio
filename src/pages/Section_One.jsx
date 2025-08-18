@@ -83,14 +83,13 @@ function SectionOne() {
         <div className="p-6">
           <h1 className="font-bold text-3xl">ABOUT ME</h1>
           <p>
-            Saya seorang mahasiswa Ilmu Komputer dengan minat kuat pada aplikasi
-            seluler dan pengembangan web. Mahir dalam mengembangkan aplikasi web
-            menggunakan React.js dan aplikasi seluler menggunakan Flutter,
-            termasuk pengembangan UI, implementasi CRUD REST API, desain
-            responsif, ilustrasi aset, dan desain database. Saya memiliki
-            pengalaman bekerja dalam tim dan saya sangat termotivasi untuk terus
-            meningkatkan keterampilan saya di bidang teknologi dan berkontribusi
-            pada aspek sosial industri
+            Saya seorang pengembang web dan aplikasi seluler dengan fokus pada
+            pengalaman pengguna dan solusi fungsional. Terbiasa membangun
+            aplikasi modern menggunakan React.js untuk web dan Flutter untuk
+            mobile, mencakup desain antarmuka, integrasi REST API, hingga
+            perancangan basis data. Berpengalaman berkolaborasi dalam tim lintas
+            disiplin, saya terus mengembangkan keterampilan agar dapat
+            memberikan dampak nyata melalui teknologi.
           </p>
         </div>
         <div className="p-6">
