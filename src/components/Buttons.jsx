@@ -20,7 +20,7 @@ ButtonSkills.propTypes = {
   name: PropTypes.string.isRequired,
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   iconSrc: PropTypes.string,
-  isDark: PropTypes.string,
+  isDark: PropTypes.bool,
 }
 
 export function Button({ name }) {
@@ -61,16 +61,16 @@ export const ToggleDarkMode = ({ onClick, isDark }) => {
   return (
     <motion.button
       onClick={onClick}
-      className={`w-16 h-8 rounded-full flex items-center border px-1 ${
+      className={`w-14 md:w-16 h-8 md:h-10 rounded-full flex items-center border px-1 ${
         isDark ? 'border-dark bg-light' : 'border-light bg-dark'
       }`}
     >
       <motion.div
         animate={{
-          x: isDark ? 28 : 0, // geser posisi icon
+          x: isDark ? 24 : 0, // geser posisi icon
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className={`w-6 h-6 flex items-center justify-center rounded-full shadow ${
+        className={`h-5 w-5 md:w-8 md:h-8 flex items-center justify-center rounded-full shadow ${
           isDark ? 'bg-dark' : 'bg-light'
         }`}
       >

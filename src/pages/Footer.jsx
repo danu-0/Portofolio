@@ -1,7 +1,7 @@
 function FooterSection() {
   return (
     <>
-      <div className="h-[1px] w-full bg-light"></div>
+      <div className="h-[0.5px] w-full bg-lightO"></div>
       <div
         id="footer"
         className="flex justify-start flex-col w-full h-auto bg-dark text-lightC px-10 py-10 text-sm"

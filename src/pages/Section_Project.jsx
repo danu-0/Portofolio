@@ -6,6 +6,7 @@ import { ButtonsProject } from '../components/Buttons'
 import { DarkMode } from '../context/darkMode'
 import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FaProjectDiagram } from 'react-icons/fa'
 
 const ProjectCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(1)
@@ -14,9 +15,9 @@ const ProjectCarousel = () => {
   const { isDarkMode } = useContext(DarkMode)
 
   const getData = async () => {
-    const chaced = sessionStorage.getItem('projectList')
-    if (chaced) {
-      setProjectList(JSON.parse(chaced))
+    const cached = sessionStorage.getItem('projectList')
+    if (cached) {
+      setProjectList(JSON.parse(cached))
       return
     }
     const data = await fetchData('project')
@@ -43,20 +44,34 @@ const ProjectCarousel = () => {
   return (
     <div
       id="project"
-      className={`flex flex-col items-center h-screen py-4 ${
+      className={`relative flex flex-col items-center h-screen py-4 overflow-hidden ${
         isDarkMode ? 'bg-light text-dark' : 'bg-dark text-light'
-      } `}
+      }`}
     >
-      <h1 className="flex w-full font-bold text-3xl px-8 md:pb-8">
-        Project List ✨
-      </h1>
+      <div
+        className={`absolute inset-0 pointer-events-none ${
+          isDarkMode ? 'bg-grid-black-05' : 'bg-grid-white-05'
+        }`}
+        style={{
+          maskImage:
+            'radial-gradient(ellipse at bottom, rgba(0,0,0,0.5) 0.50%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage:
+            'radial-gradient(ellipse at bottom, rgba(0,0,0,0.5) 10%, rgba(0,0,0,0) 100%)',
+        }}
+      ></div>
+
+      <div className=" w-full flex flex-row justify-start items-center  px-8 md:pb-8 gap-2">
+        <FaProjectDiagram size={35} />
+        <h1 className="font-bold text-3xl">Project List</h1>
+      </div>
+
       {/* Container Carousel */}
-      <div className="flex overflow-hidden items-center w-11/12 relative h-full rounded-lg mx-6">
+      <div className="flex overflow-hidden items-center w-11/12 relative h-full rounded-lg mx-6 z-10">
         {projectList.map((project, index) => {
-          const offset = (index - activeIndex) * 100 // jarak antara card
-          const scale = index === activeIndex ? 1 : 0.9 // Scaling card yang aktif dan tidak aktif
-          const opacity = index === activeIndex ? 1 : 0.7 // Opacity card yang tidak aktif
-          const shadow = index === activeIndex ? '0px 0px 5px gray' : 'none' //shadow
+          const offset = (index - activeIndex) * 100
+          const scale = index === activeIndex ? 1 : 0.9
+          const opacity = index === activeIndex ? 1 : 0.7
+          const shadow = index === activeIndex ? `0px 0px 5px ` : 'none'
 
           return (
             <div
@@ -137,16 +152,16 @@ const ProjectCarousel = () => {
         })}
       </div>
 
-      <div className="md:mt-8 flex space-x-8">
+      <div className="md:mt-8 flex space-x-8 z-10">
         <button
           onClick={handlePrev}
-          className="flex items-center justify-center w-12 h-12"
+          className="flex items-center justify-center w-12 h-12 hover:text-pink"
         >
           <FontAwesomeIcon icon={faCaretLeft} className="text-4xl" />
         </button>
         <button
           onClick={handleNext}
-          className="flex items-center justify-center w-12 h-12"
+          className="flex items-center justify-center w-12 h-12 hover:text-pink"
         >
           <FontAwesomeIcon icon={faCaretRight} className="text-4xl" />
         </button>

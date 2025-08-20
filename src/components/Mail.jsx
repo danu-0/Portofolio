@@ -2,6 +2,7 @@ import emailjs from 'emailjs-com'
 import { useContext, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DarkMode } from '../context/darkMode'
+import PropTypes from 'prop-types'
 
 export function Mail() {
   const form = useRef()
@@ -95,36 +96,65 @@ export function Mail() {
   )
 }
 
-export function MailText() {
+export function MailText({ isDark }) {
+  const experiences = [
+    {
+      image: 'pc.png',
+      title: 'Programming Community',
+      role: 'committee',
+      period: '2023 - Present',
+      description: `Sebagai Anggota Komite Divisi Kurikulum di Programming Community Bumigora University sejak September 2023, saya terlibat dalam sesi mentoring mingguan, pembuatan materi pembelajaran terstruktur, berbagi pengetahuan, serta berpartisipasi dalam perencanaan dan pelaksanaan acara organisasi.`,
+    },
+    {
+      image: 'flss.webp',
+      title: 'Full Stack Lombok',
+      role: 'Front End Developer',
+      period: '2025 - Present',
+      description: `Mengembangkan dan memelihara aplikasi web menggunakan JavaScript, TypeScript, React.js, dan Next.js, sambil berkolaborasi dengan klien dan anggota tim untuk membahas persyaratan dan pembaruan proyek, serta menerapkan seo dan menguji fitur baru untuk memastikan kompatibilitas di seluruh browser dan perangkat.`,
+    },
+  ]
+
   return (
-    <div className="rounded-lg h-full w-full flex flex-col">
-      <h1 className="text-xl font-bold mb-4">Experience</h1>
-      <ul>
-        <li>
-          <h1 className="font-bold my-4">
-            💻Programming Community Bumigora University (2023 - Present)
-          </h1>
-          <p>
-            Sebagai Anggota Komite Divisi Kurikulum di Programming Community
-            Bumigora University sejak September 2023, saya terlibat dalam sesi
-            mentoring mingguan, pembuatan materi pembelajaran terstruktur,
-            berbagi pengetahuan, serta berpartisipasi dalam perencanaan dan
-            pelaksanaan acara organisasi.
-          </p>
-        </li>
-        <li>
-          <h1 className="font-bold my-4">
-            🌐 FREELANCE SOCIAL MEDIA(2025 - Present)
-          </h1>
-          <p>
-            Sebagai Digital Illustration Artist, saya berinteraksi dengan klien
-            untuk memahami visi dan kebutuhan mereka, memberikan saran kreatif,
-            mengembangkan konsep visual, mengelola tenggat waktu proyek, serta
-            menangani tugas administratif seperti penagihan, kontrak, dan
-            komunikasi klien melalui email atau media sosial.
-          </p>
-        </li>
-      </ul>
+    <div className="rounded-lg h-full w-full flex flex-col relative ">
+      <h1 className="text-2xl font-bold mb-6">Experience</h1>
+
+      <div className="relative pl-10">
+        {/* Garis timeline vertikal */}
+        <div
+          className={`absolute left-2 md:left-5 w-[3px] h-full ${
+            isDark ? 'bg-darkO' : 'bg-lightO'
+          }`}
+        ></div>
+
+        {experiences.map((exp, index) => (
+          <div key={index} className="mb-12 relative flex items-start group">
+            {/* Dot timeline */}
+            <div
+              className={`absolute -left-[38px] md:-left-[26px] mt-1 w-4 h-4 rounded-full z-10 group-hover:bg-pink transition-transform duration-300 group-hover:scale-125 ${
+                isDark ? 'bg-dark' : 'bg-light'
+              } `}
+            ></div>
+
+            <div className="ml-6">
+              <div className="flex flex-row justify-start items-center gap-2">
+                <img src={exp.image} alt={exp.title} className="w-auto h-10" />
+                <h2 className="font-semibold text-start text-lg">
+                  {exp.title}
+                </h2>
+              </div>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                {`${exp.period} (${exp.role})`}
+              </span>
+              <p className="mt-2 text-left md:text-justify">
+                {exp.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
+}
+MailText.propTypes = {
+  isDark: PropTypes.bool,
 }

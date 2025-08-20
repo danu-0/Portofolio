@@ -6,13 +6,6 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-img.pixelated {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges; /* Firefox */
-  image-rendering: crisp-edges; /* Safari */
-  image-rendering: high-quality; /* Fallback */
-}
-
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -21,21 +14,4 @@ img.pixelated {
 }
 ::-webkit-scrollbar-thumb {
   background: #353cfb;
-}
-
-/* tombol segitiga */
-.triangle-left {
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 12px solid black;
-}
-
-.triangle-right {
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 12px solid black;
 }

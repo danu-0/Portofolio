@@ -40,7 +40,11 @@ function Navbb() {
       >
         <h1 className="font-bold text-xl">DANU HAERIDA PUTRA</h1>
 
-        <div className="hidden sm:flex gap-8 items-center justify-center">
+        <div
+          className={`hidden sm:flex gap-8 items-center border-[0.5px] justify-center py-3 px-6 rounded-xl ${
+            isDarkMode ? 'bg-darkO border-darkO' : 'bg-lightO border-lightO'
+          } backdrop:blur-2xl `}
+        >
           {menuItems.map((item, index) => (
             <motion.a
               key={index}
@@ -59,22 +63,25 @@ function Navbb() {
             </motion.a>
           ))}
         </div>
-        <ToggleDarkMode
-          isDark={isDarkMode}
-          onClick={() => setIsDarkMode(!isDarkMode)}
-        />
-        <motion.button
-          className={`font-bold hidden sm:flex items-center justify-center rounded-xl px-10 py-2 hover:bg-pink duration-500 ${
-            isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'
-          }`}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ delay: 0.4 }}
-          onClick={() => window.open('https://github.com/danu-0', '_blank')}
-        >
-          Git Hub
-        </motion.button>
+
+        <div className="flex flex-row gap-2 items-center">
+          <ToggleDarkMode
+            isDark={isDarkMode}
+            onClick={() => setIsDarkMode(!isDarkMode)}
+          />
+          <motion.button
+            className={`font-bold hidden sm:flex items-center justify-center rounded-xl px-6 py-2 hover:bg-pink duration-500 ${
+              isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'
+            }`}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ delay: 0.4 }}
+            onClick={() => window.open('https://github.com/danu-0', '_blank')}
+          >
+            Git Hub
+          </motion.button>
+        </div>
 
         <div className="sm:hidden">
           <motion.div
@@ -84,9 +91,9 @@ function Navbb() {
             onClick={toggleNavBar}
           >
             {isOpen ? (
-              <XMarkIcon className="h-8 w-8 text-gray-200 cursor-pointer" />
+              <XMarkIcon className="h-8 w-8 cursor-pointer" />
             ) : (
-              <Bars3Icon className="h-8 w-8 text-custom-secondary cursor-pointer" />
+              <Bars3Icon className="h-8 w-8 cursor-pointer" />
             )}
           </motion.div>
         </div>
@@ -95,7 +102,7 @@ function Navbb() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed top-20 left-0 w-full h-screen bg-neutral-900 z-50 transition-all"
+            className="fixed top-20 left-0 w-full h-screen bg-dark z-50 transition-all"
             initial={{ opacity: 0, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 1, y: 0 }}
