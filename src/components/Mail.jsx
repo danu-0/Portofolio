@@ -1,37 +1,122 @@
 import emailjs from 'emailjs-com'
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DarkMode } from '../context/darkMode'
 import PropTypes from 'prop-types'
+import { useGoogleLogin } from '@react-oauth/google'
+import { MdExitToApp } from 'react-icons/md'
+import { FcGoogle } from 'react-icons/fc'
 
 export function Mail() {
   const form = useRef()
   const [isLoading, setIsLoading] = useState(false)
   const { isDarkMode } = useContext(DarkMode)
+  const [, setUser] = useState(null)
+  const [profile, setProfile] = useState(null)
+  const [messageCount, setMessageCount] = useState(0)
+  const [userEmail, setUserEmail] = useState('')
+  const [userName, setUserName] = useState('')
 
-  const sendEmail = (e) => {
+  useEffect(() => {
+    const savedUser = localStorage.getItem('googleUser')
+    const savedProfile = localStorage.getItem('googleProfile')
+    const savedCount = localStorage.getItem('messageCount')
+
+    if (savedUser) setUser(JSON.parse(savedUser))
+    if (savedProfile) setProfile(JSON.parse(savedProfile))
+    if (savedCount) setMessageCount(parseInt(savedCount))
+  }, [])
+
+  const login = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      setUser(codeResponse)
+      localStorage.setItem('googleUser', JSON.stringify(codeResponse))
+
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${codeResponse.access_token}`,
+              Accept: 'application/json',
+            },
+          }
+        )
+
+        if (response.ok) {
+          const userData = await response.json()
+          setProfile(userData)
+          setUserEmail(userData.email)
+          setUserName(userData.name || '')
+          localStorage.setItem('googleProfile', JSON.stringify(userData))
+        }
+      } catch (error) {
+        console.log('Error fetching profile:', error)
+      }
+    },
+    onError: (error) => console.log('Login Failed:', error),
+    flow: 'implicit',
+    ux_mode: 'redirect',
+  })
+
+  const logOut = () => {
+    setUser(null)
+    setProfile(null)
+    setUserEmail('')
+    setUserName('')
+    setMessageCount(0)
+    localStorage.removeItem('googleUser')
+    localStorage.removeItem('googleProfile')
+    localStorage.removeItem('messageCount')
+  }
+
+  const handleEmailChange = (e) => {
+    setUserEmail(e.target.value)
+  }
+
+  const handleNameChange = (e) => {
+    setUserName(e.target.value)
+  }
+
+  const sendEmail = async (e) => {
     e.preventDefault()
+
+    if (messageCount >= 3) {
+      alert('😡 Udah wak, lu mau spam apa gimana?')
+      logOut()
+      return
+    }
+
     setIsLoading(true)
 
-    emailjs
-      .sendForm(
+    try {
+      const result = await emailjs.sendForm(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         form.current,
         import.meta.env.VITE_EMAILJS_USER_ID
       )
-      .then(
-        (result) => {
-          console.log('Email berhasil dikirim!', result.text)
-          alert('Pesan berhasil dikirim!')
-          setIsLoading(false)
-        },
-        (error) => {
-          console.log('Gagal mengirim email.', error.text)
-          alert('Gagal mengirim pesan. Silakan coba lagi.')
-          setIsLoading(false)
-        }
-      )
+
+      console.log('Email berhasil dikirim!', result.text)
+
+      const newCount = messageCount + 1
+      setMessageCount(newCount)
+      localStorage.setItem('messageCount', newCount.toString())
+
+      alert('Pesan berhasil dikirim!')
+
+      if (newCount >= 3) {
+        alert(
+          'Anda telah mencapai batas maksimal pengiriman pesan. Akun akan logout.'
+        )
+        setTimeout(logOut, 2000)
+      }
+    } catch (error) {
+      console.log('Gagal mengirim email.', error.text)
+      alert('Gagal mengirim pesan. Silakan coba lagi.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -53,42 +138,104 @@ export function Mail() {
       >
         <div className="flex flex-col py-6 px-2 flex-grow">
           <label htmlFor="email" className="font-bold my-2">
-            Email
+            <div className="flex flex-row justify-between">
+              <p>Email</p>
+              {profile ? (
+                <MdExitToApp
+                  size={20}
+                  onClick={logOut}
+                  className={`${isDarkMode ? 'text-dark' : 'text-light'}`}
+                />
+              ) : (
+                ''
+              )}
+            </div>
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-grayC  leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-grayC leading-tight focus:outline-none focus:shadow-outline"
             id="email"
-            name="from_name"
+            name="from_email"
             type="email"
             placeholder="Example@gmail.com"
             required
+            value={userEmail}
+            onChange={handleEmailChange}
+            readOnly={!!profile}
+            autoComplete="email"
+            disabled={!profile}
           />
+
+          {/* Input untuk nama pengirim */}
+          <label htmlFor="name" className="font-bold my-2">
+            Nama
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-grayC leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            name="from_name"
+            type="text"
+            placeholder="Nama Anda"
+            required
+            value={userName}
+            onChange={handleNameChange}
+            autoComplete="name"
+            disabled={!profile}
+          />
+
           <label htmlFor="content" className="font-bold my-2">
-            Message
+            {`Message ${messageCount}/3`}
           </label>
           <textarea
-            className="shadow appearance-none border rounded w-full h-60 py-2 px-3  text-grayC  leading-tight focus:outline-none focus:shadow-outline resize-none mb-6 text-start"
+            className="shadow appearance-none border rounded w-full h-60 py-2 px-3 text-grayC leading-tight focus:outline-none focus:shadow-outline resize-none mb-6 text-start"
             name="message"
             id="content"
             placeholder="Write Message Here..."
             required
+            disabled={!profile}
           />
+
           <input type="hidden" name="to_name" value="Danu Haerida Putra" />
-          <div className="flex w-full justify-center items-center">
-            <AnimatePresence>
-              <motion.button
-                className={`font-bold sm:flex items-center justify-cente rounded-xl px-10 py-2 hover:bg-pink duration-500 ${
-                  isDarkMode ? 'bg-black text-gray-100' : 'bg-light text-dark'
+
+          <div className="flex flex-col w-full justify-center items-center">
+            {profile ? (
+              ''
+            ) : (
+              <p className="mb-4 text-sm font-light">
+                Login dlu bree, males gw ke spam mulu
+              </p>
+            )}
+            {profile ? (
+              <AnimatePresence>
+                <motion.button
+                  className={`font-bold sm:flex items-center justify-center rounded-xl px-10 py-2 hover:bg-pink duration-500 ${
+                    isDarkMode ? 'bg-black text-gray-100' : 'bg-light text-dark'
+                  } ${
+                    messageCount >= 3 ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: 0.4 }}
+                  type="submit"
+                  disabled={messageCount >= 3 || isLoading}
+                >
+                  {isLoading ? 'Sending...' : 'Send'}
+                </motion.button>
+              </AnimatePresence>
+            ) : (
+              <button
+                type="button"
+                onClick={() => login()}
+                className={`font-bold flex items-center justify-center rounded-xl px-6 py-2 duration-500 ${
+                  isDarkMode ? 'bg-dark text-light' : 'bg-light text-dark'
                 }`}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.4 }}
-                type="submit"
               >
-                {isLoading ? 'Sending...' : 'Send'}
-              </motion.button>
-            </AnimatePresence>
+                <div className="flex flex-row items-center gap-2">
+                  <p> Login with Google</p>
+                  <FcGoogle size={20} />
+                </div>
+              </button>
+            )}
           </div>
         </div>
       </form>
