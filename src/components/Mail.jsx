@@ -81,12 +81,6 @@ export function Mail() {
   const sendEmail = async (e) => {
     e.preventDefault()
 
-    if (messageCount >= 3) {
-      alert('😡 Udah wak, lu mau spam apa gimana?')
-      logOut()
-      return
-    }
-
     setIsLoading(true)
 
     try {
@@ -106,10 +100,8 @@ export function Mail() {
       alert('Pesan berhasil dikirim!')
 
       if (newCount >= 3) {
-        alert(
-          'Anda telah mencapai batas maksimal pengiriman pesan. Akun akan logout.'
-        )
-        setTimeout(logOut, 2000)
+        alert('😡 Udah wak, lu mau spam apa gimana?.')
+        setTimeout(logOut, 1000)
       }
     } catch (error) {
       console.log('Gagal mengirim email.', error.text)
