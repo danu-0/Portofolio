@@ -7,7 +7,7 @@ import { useGoogleLogin } from '@react-oauth/google'
 import { MdExitToApp } from 'react-icons/md'
 import { FcGoogle } from 'react-icons/fc'
 
-export function Mail() {
+export function Mail({ className = '' }) {
   const form = useRef()
   const [isLoading, setIsLoading] = useState(false)
   const { isDarkMode } = useContext(DarkMode)
@@ -101,7 +101,7 @@ export function Mail() {
 
       if (newCount >= 3) {
         alert('😡 Udah wak, lu mau spam apa gimana?.')
-        setTimeout(logOut, 1000)
+        logOut()
       }
     } catch (error) {
       console.log('Gagal mengirim email.', error.text)
@@ -112,8 +112,8 @@ export function Mail() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-xl font-bold mb-4">Contact Me</h1>
+    <div className={`flex flex-col gap-4 ${className}`}>
+      <h1 className="text-xl font-bold">Contact Me</h1>
       <p className="text-justify">
         Mari terhubung dan jelajahi peluang untuk berkolaborasi, belajar, dan
         tumbuh bersama!🤝Baik mendiskusikan proyek, berbagi wawasan, atau
@@ -234,6 +234,9 @@ export function Mail() {
     </div>
   )
 }
+Mail.propTypes = {
+  className: PropTypes.string,
+}
 
 export function MailText({ isDark }) {
   const experiences = [
@@ -255,7 +258,7 @@ export function MailText({ isDark }) {
 
   return (
     <div className="rounded-lg h-full w-full flex flex-col relative ">
-      <h1 className="text-2xl font-bold mb-6">Experience</h1>
+      <h1 className="text-xl font-bold mb-6">Experience</h1>
 
       <div className="relative pl-10">
         {/* Garis timeline vertikal */}

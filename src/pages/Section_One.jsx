@@ -29,7 +29,7 @@ function SectionOne() {
     }, 3000)
 
     return () => clearInterval(interval)
-  }, [quotes.length])
+  }, [])
 
   const description = `Saya seorang pengembang web dan aplikasi seluler dengan
   fokus pada pengalaman pengguna dan solusi fungsional. Terbiasa membangun aplikasi modern
@@ -163,7 +163,7 @@ function SectionOne() {
             <div className="h-auto flex flex-col gap-1 md:gap-5">
               <Skil direction="right" />
               <Skil direction="left" />
-              <Skil direction="right" />
+              {/* <Skil direction="right" /> */}
             </div>
           </div>
         </div>

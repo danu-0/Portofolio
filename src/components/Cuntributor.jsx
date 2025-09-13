@@ -1,15 +1,18 @@
 import { useContext, useEffect, useState } from 'react'
 import { DarkMode } from '../context/darkMode'
 import { SiGithub } from 'react-icons/si'
+import { TailSpin } from 'react-loader-spinner'
 
 function Cuntributor() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const { isDarkMode } = useContext(DarkMode)
+  const url = import.meta.env.VITE_BASE_URL
 
   useEffect(() => {
-    fetch('https://portofolio-be-xi.vercel.app/github/contributions/danu-0')
+    setLoading(true)
+    fetch(`${url}/github/contributions/danu-0`)
       .then((res) => res.json())
       .then((json) => {
         setData(json)
@@ -17,21 +20,24 @@ function Cuntributor() {
       })
       .catch((err) => {
         console.error(err)
-        setError('Gagal fetch data GitHub')
+        setError('Gagal fetch data Kontribusi')
         setLoading(false)
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (loading) return <p>Loading...</p>
   if (error) return <p>{error}</p>
 
   // Hitung tambahan
-  const total = data.totalContributions
-  const allDays = data.weeks.flatMap((week) => week.contributionDays)
+  const total = data?.totalContributions ?? 0
+  const allDays = data?.weeks.flatMap((week) => week.contributionDays) ?? []
   const thisWeek = allDays
     .slice(-7)
     .reduce((a, b) => a + b.contributionCount, 0)
-  const bestDay = Math.max(...allDays.map((d) => d.contributionCount))
+  const bestDay =
+    allDays.length > 0
+      ? Math.max(...allDays.map((d) => d.contributionCount))
+      : 0
   const average = allDays.length > 0 ? Math.round(total / allDays.length) : 0
 
   const cont = [
@@ -75,7 +81,11 @@ function Cuntributor() {
             }`}
           >
             <p className="font-light text-sm">{e.title}</p>
-            <p className="text-pink font-extrabold text-3xl">{e.nilai}</p>
+            {loading ? (
+              <TailSpin color="blue" height={30} width={30} />
+            ) : (
+              <p className="text-pink font-extrabold text-3xl">{e.nilai}</p>
+            )}
           </div>
         ))}
       </div>
